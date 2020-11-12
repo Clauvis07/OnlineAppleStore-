@@ -1,40 +1,92 @@
-﻿<!DOCTYPE html>
+﻿@using OnlineShopingStore.Models.Home
+
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
-    @Styles.Render("~/Content/css")
+    @*@Styles.Render("~/Content/css")*@
+    @*add links css*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/MyMainLayOut.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6 ">
+                <div class="logo">
+                    <h1><a href="#">Online<span>Iphone Store</span></a></h1>
+                    <p>My Shop</p>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="fa fa-shopping-cart" style="font-size:x-large;color:#337ab7"></i><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        @if (Session["cart"] != null)
+                        {
+                            foreach (var item in (List<Item>)Session["cart"])
+                            {
+                                @* to move in cart*@
+                                <li><a href="@Url.Action("removeFormCart","Home",new { productId=item.product.ProductId})">@item.product.ProductName (@item.quantity)<i class="fa fa-times" style="color:red"></i></a></li>
+                            }
+                        }
+
+                        <li class="divider"></li>
+                        <li><a style="background-color:#337ab7" href="@Url.Action("CheckOut","Home",new { })">CheckOut</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="nav-menus">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="rounded">
+                            <a style="border-radius:initial;" href="@Url.Action("Index","Home",new { })">Home</a>
+                        </li>
+                        <li class="rounded">
+                            <a style="border-radius:initial;" href="@Url.Action("Location","Home",new { })">Location</a>
+                        </li>
+                        <li><a style="border-radius:initial;" href="@Url.Action("Contact","Home",new { })">About</a></li>
+                        <li class="rounded">
+                            <a style="border-radius:initial;" href="@Url.Action("Login","Home",new { })"> Login</a>
+                        </li>
+                        <li>
+                        <a href="@Url.Action("Categories","Admin",new { })">Admin</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="row">
+                <div class="col-md-12 copyright">
+                    <div class="col-md-6 col-sm-6 copyright-left ">
+                        <p>&copy; @DateTime.Now.Year - OnlineIphoneStore.All right reserved. </p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 copyright-right ">
+                        <ul class="list-unstyled list-social">
+                            <li> <a href="https://www.facebook.com/apple" target="_blank"><i class="fa fa-facebook-square"></i></a> </li>
+                            <li> <a href="https://twitter.com/apple" target="_blank"><i class="fa fa-twitter"></i></a> </li>
+                            <li> <a href="https://www.instagram.com/apple/" target="_blank"><i class="fa fa-instagram"></i></a> </li>
+                            <li> <a href="https://www.youtube.com/user/Apple?hl=fr" target="_blank"><i class="fa fa-youtube"></i></a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </footer>
     </div>
 

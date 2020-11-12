@@ -1,0 +1,52 @@
+﻿@model IEnumerable<OnlineShopingStore.DAL.Tbl_Product>
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Proiduct Details
+        <a href="~/Admin/ProductAdd" class="btn btn-info " style="float:right">Add New</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Category Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Prduct Name</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @{ int count = 1;}
+                    @foreach (var item in Model)
+                    {
+                        
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.ProductName</td>
+                        <td>
+                            @Html.ActionLink("Edit", "ProductEtdit", new { ProductId = item.ProductId })
+                            @*@Html.ActionLink("Back to List", "Index")*@
+                        </td>
+
+                    </tr>
+                        count++;
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
